@@ -10,6 +10,16 @@ const jobReducer = (state = initialJobState, action) => {
           favourites: state.favouritesJob.favourites.concat(action.payload),
         },
       };
+    case "DELETE_FAVOURITE":
+      return {
+        ...state,
+        favouritesJob: {
+          ...state.favouritesJob,
+          favourites: state.favouritesJob.favourites.filter(
+            (e, i) => i !== action.payload
+          ),
+        },
+      };
     default:
       return state;
   }

@@ -2,13 +2,10 @@ import react from "react";
 import { Button, Container, Row, Form, Col, Image } from "react-bootstrap";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { addToFavouriteList } from "../actions/index";
 const mapDispatchToProps = (dispatch) => ({
   addToFavourites: (favourite) => {
-    dispatch({
-      type: "ADD_TO_FAVOURITE",
-      payload: favourite,
-    });
+    dispatch(addToFavouriteList(favourite));
   },
 });
 
