@@ -23,7 +23,9 @@ const Favourites = (props) => {
             <Button
               varaint="danger"
               onClick={() => props.removeFromFavourites(i)}
-            ></Button>
+            >
+              delete
+            </Button>
             <div> {e.company} </div>
             <div> {e.location}</div>
             <div> {e.title}</div>
