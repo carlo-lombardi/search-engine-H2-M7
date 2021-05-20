@@ -1,7 +1,18 @@
 import react from "react";
-import { Container, Row, Form, Col, Image } from "react-bootstrap";
+import { Button, Container, Row, Form, Col, Image } from "react-bootstrap";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-export default class SearchPage extends react.Component {
+
+const mapDispatchToProps = (dispatch) => ({
+  addToFavourites: (favourite) => {
+    dispatch({
+      type: "ADD_TO_FAVOURITE",
+      payload: favourite,
+    });
+  },
+});
+
+class SearchPage extends react.Component {
   state = {
     description: "",
     location: "",
@@ -28,7 +39,7 @@ export default class SearchPage extends react.Component {
     return (
       <Container>
         <Row className="mt-5">
-          <Col xs={12} md={8} className="mx-auto">
+          <Col xs={12} md={12} className="mx-auto">
             <h1>Search Jobs...</h1>
             <Form onClick={this.handleSubmit}>
               <div className="d-flex my-3">
@@ -48,26 +59,33 @@ export default class SearchPage extends react.Component {
               </div>
               <Form.Control type="submit" value="Submit" />
             </Form>
-            {this.state.results.map((e) => (
-              <Col xs={12} className="d-flex">
-                <Col xs={2}>
-                  <Image
-                    style={{ maxWidth: "100px", maxHeight: "100px" }}
-                    className="result-img"
-                    src={e.company_logo}
-                  />
-                </Col>
-                <Col xs={10} className="ps-2">
-                  <h6 className="mt-3">{e.company}</h6>
-                  <Link to={`/${e.id}`} className="btn btn-primary">
-                    details
-                  </Link>
-                </Col>
-              </Col>
-            ))}
           </Col>
         </Row>
+        {this.state.results.map((e, i) => (
+          <Row key={i}>
+            <Col xs={2} className="mt-1">
+              <Image
+                style={{ maxWidth: "100px", maxHeight: "100px" }}
+                src={e.company_logo}
+              />
+            </Col>
+            <Col xs={8} className="ps-2">
+              <h6>{e.company}</h6>
+              <Link to={`/${e.id}`} className="btn btn-primary">
+                details
+              </Link>
+            </Col>
+            <Col>
+              <Button onClick={() => this.props.addToFavourites(e)}>+</Button>
+            </Col>
+          </Row>
+        ))}
+        <Button onClick={() => this.props.history.push("/favourites")}>
+          favor
+        </Button>
       </Container>
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(SearchPage);

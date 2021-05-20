@@ -9,7 +9,6 @@ export default class jobCard extends react.Component {
     this.gettingTheJobs();
   }
   gettingTheJobs = async () => {
-    console.log(this.props.match.params.singleJobId);
     const response = await fetch(
       `https://strive-proxy.herokuapp.com/https://jobs.github.com/positions/${this.props.match.params.singleJobId}.json`
     );
